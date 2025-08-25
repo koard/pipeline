@@ -58,10 +58,7 @@ pipeline {
     }
     stage('Deploy') {
       when {
-        allOf {
-          expression { return params.RUN_DEPLOY }
-          beforeAgent true
-        }
+        expression { return params.RUN_DEPLOY }
       }
       steps {
         echo "Deploying application to ${params.ENV} environment..."
