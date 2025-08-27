@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo "Running tests..."'
-                sh 'docker run --rm -v /var/jenkins_home/workspace/app:/ -w /app jenkins-demo-app:latest pytest'
+                sh 'docker run --rm -v /var/jenkins_home/workspace:/app -w /app jenkins-demo-app:latest pytest'
             }
         }
         stage('Run Container') {
