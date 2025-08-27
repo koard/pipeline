@@ -6,4 +6,5 @@ RUN pip install -r requirements.txt
 RUN pip install pytest
 
 COPY app.py .
+COPY test_app.py .
 CMD ["python", "app.py"]

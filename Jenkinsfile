@@ -14,13 +14,9 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo "Running tests..."'
-                // Host workspace contents
-                sh 'echo "Host workspace ($PWD) contents:"'
-                sh 'ls -la'
-                // Inside container: list /app
-                sh 'docker run --rm -v "$PWD":/app -w /app jenkins-demo-app:latest ls -la /app'
-                // Inside container: run pytest
-                sh 'docker run --rm -v "$PWD":/app -w /app jenkins-demo-app:latest pytest -q || true'
+                // Run pytest inside the built image (tests are copied into the image)
+                sh 'docker run --rm -w /app jenkins-demo-app:latest ls -la /app'
+                sh 'docker run --rm -w /app jenkins-demo-app:latest pytest -q'
             }
         }
         stage('Run Container') {
