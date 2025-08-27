@@ -14,7 +14,11 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo "Running tests..."'
-                sh 'docker run --rm -v /var/jenkins_home/workspace/app:/app -w /app jenkins-demo-app:latest pytest'
+                // List files in Jenkins workspace (host)
+                sh 'echo "Host workspace ($PWD) contents:"'
+                sh 'ls -la'
+                // List files inside container at /app after mounting current workspace
+                sh 'docker run --rm -v "$PWD":/app -w /app jenkins-demo-app:latest /bin/sh -lc "echo \"Inside container /app contents:\"; ls -la /app; echo; [ -f /app/test_app.py ] && echo \"Found test_app.py\" || echo \"test_app.py not found\"; pytest || true"'
             }
         }
         stage('Run Container') {
