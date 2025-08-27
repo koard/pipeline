@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo "Running tests..."'
-                sh 'pytest || true'
+                sh 'docker run --rm -v $PWD:/app -w /app jenkins-demo-app:latest pytest || true'
             }
         }
         stage('Run Container') {
